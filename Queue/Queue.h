@@ -9,6 +9,8 @@ class Queue
 	int size;
 	int front;
 	int rear;
+	int noOfElements;
+	void reSize();
 public:
 	Queue(int s = 0);
 	int getSize()const;
@@ -20,8 +22,19 @@ public:
 	T dequeue();
 	T shiftedDequeue();
 	void printQueue();
+	int getNoOfElements()const;
 	~Queue();
 };
+template<typename T>
+void Queue<T>::reSize()
+{
+
+}
+template<typename T>
+int Queue<T>::getNoOfElements()const
+{
+	return noOfElements;
+}
 template<typename T>
 int Queue<T>::getSize()const
 {
@@ -49,7 +62,7 @@ bool Queue<T>::isEmpty()const
 template<typename T>
 bool Queue<T>::isFull()const
 {
-	return (front == (rear + 1) % size) ? true : false;
+	return (front == size - 1) ? true : false;
 }
 template<typename T>
 T Queue<T>::showFront()const
@@ -82,7 +95,7 @@ void Queue<T>::enqueue(T element)
 {
 	if (!isFull())
 	{
-		rear = (rear + 1) % size;
+		rear++;
 		data[rear] = element;
 		if (front == -1)
 		{
@@ -99,7 +112,6 @@ T Queue<T>::dequeue()
 {
 	if (!isEmpty())
 	{
-		front = front % size;
 		T element = data[front%size];
 		if (front == rear)
 		{
