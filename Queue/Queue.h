@@ -10,7 +10,7 @@ class Queue
 	int front;
 	int rear;
 	int noOfElements;
-	void reSize();
+	void reSize(int newSize);
 public:
 	Queue(int s = 0);
 	int getSize()const;
@@ -26,9 +26,21 @@ public:
 	~Queue();
 };
 template<typename T>
-void Queue<T>::reSize()
+void Queue<T>::reSize(int newSize)
 {
-
+	if (newSize < 0)
+	{
+		return;
+	}
+	T* temp = new T[newSize];
+	int i = 0;
+	while (i < newSize && i < size)
+	{
+		temp[i] = data[i];
+	}
+	delete[]data;
+	data = temp;
+	size = newSize;
 }
 template<typename T>
 int Queue<T>::getNoOfElements()const
@@ -62,14 +74,14 @@ bool Queue<T>::isEmpty()const
 template<typename T>
 bool Queue<T>::isFull()const
 {
-	return (front == size - 1) ? true : false;
+	return (front == (rear + 1) % size) ? true : false;
 }
 template<typename T>
 T Queue<T>::showFront()const
 {
 	if (!isEmpty())
 	{
-		T element = data[front];
+		T element = data[front%size];
 		return element;
 	}
 	else
@@ -95,7 +107,7 @@ void Queue<T>::enqueue(T element)
 {
 	if (!isFull())
 	{
-		rear++;
+		rear = (rear + 1) % size;;
 		data[rear] = element;
 		if (front == -1)
 		{
@@ -112,7 +124,8 @@ T Queue<T>::dequeue()
 {
 	if (!isEmpty())
 	{
-		T element = data[front%size];
+		front = front % size;
+		T element = data[front];
 		if (front == rear)
 		{
 			front = rear = -1;
