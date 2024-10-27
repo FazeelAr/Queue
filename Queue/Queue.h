@@ -38,7 +38,7 @@ void Queue<T>::reSize(int newSize)
 	{
 		temp[i] = data[i];
 	}
-	delete[]data;
+	delete []data;
 	data = temp;
 	size = newSize;
 }
@@ -60,11 +60,13 @@ Queue<T>::Queue(int s)
 		data = nullptr;
 		size = 0;
 		rear = front = -1;
+		noOfElements = 0;
 		return;
 	}
 	size = s;
 	data = new T[size];
 	rear = front = -1;
+	noOfElements = 0;
 }
 template<typename T>
 bool Queue<T>::isEmpty()const
@@ -113,6 +115,7 @@ void Queue<T>::enqueue(T element)
 		{
 			front = 0;
 		}
+		noOfElements++;
 	}
 	else
 	{
@@ -134,6 +137,7 @@ T Queue<T>::dequeue()
 		{
 			front++;
 		}
+		noOfElements--;
 		return element;
 	}
 	else

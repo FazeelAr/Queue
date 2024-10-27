@@ -8,11 +8,12 @@ int main()
 		{
 			q.enqueue(i);
 		}
-		for (int i = 0; i < q.getSize(); i++)
+		for (int i = 0; i < q.getSize()-4; i++)
 		{
-			q.enqueue(q.dequeue());
+			q.dequeue();
+			q.enqueue(i);
 		}
-		for (int i = 1; i <= 7; i++)
+		while(!q.isEmpty())
 		{
 			cout<<q.dequeue()<<' ';
 		}
