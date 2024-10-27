@@ -43,11 +43,19 @@ public:
 		rear = front = -1;
 		noOfElements = 0;
 	}
-	bool isFull()
+	int getCapacity()const
+	{
+		return capacity;
+	}
+	int getNoOfElements()const
+	{
+		return noOfElements;
+	}
+	bool isFull()const
 	{
 		return (noOfElements == capacity);
 	}
-	bool isEmpty()
+	bool isEmpty()const
 	{
 		return (rear == -1 && front == -1);
 	}
