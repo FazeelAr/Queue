@@ -28,7 +28,7 @@ public:
 template<typename T>
 void Queue<T>::reSize(int newSize)
 {
-	if (newSize < 0)
+	if (newSize <= 0)
 	{
 		return;
 	}
@@ -37,8 +37,10 @@ void Queue<T>::reSize(int newSize)
 	while (i < newSize && i < size)
 	{
 		temp[i] = data[i];
+		i++;
 	}
-	delete []data;
+	if(data)
+		delete []data;
 	data = temp;
 	size = newSize;
 }
@@ -76,7 +78,7 @@ bool Queue<T>::isEmpty()const
 template<typename T>
 bool Queue<T>::isFull()const
 {
-	return (front == (rear + 1) % size) ? true : false;
+	return (noOfElements==size) ? true : false;
 }
 template<typename T>
 T Queue<T>::showFront()const
@@ -107,20 +109,17 @@ T Queue<T>::showRear()const
 template<typename T>
 void Queue<T>::enqueue(T element)
 {
-	if (!isFull())
+	if (isFull())
 	{
-		rear = (rear + 1) % size;;
-		data[rear] = element;
-		if (front == -1)
-		{
-			front = 0;
-		}
-		noOfElements++;
+		reSize(size + 1);
 	}
-	else
+	rear = (rear + 1) % size;;
+	data[rear] = element;
+	if (front == -1)
 	{
-		throw "\nQueue is full";
+		front = 0;
 	}
+	noOfElements++;
 }
 template<typename T>
 T Queue<T>::dequeue()
